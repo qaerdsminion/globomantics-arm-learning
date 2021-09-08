@@ -46,7 +46,7 @@ jobs:
           parameters: 
            ./arm-templates/SA.parameters.json
            StorageAccountName=axeldevopstestsa2
-           location="East Europe"
+           location=northeurope
           deploymentname: incremental # The default mode; will not edit resources already in the RG.
 
 
