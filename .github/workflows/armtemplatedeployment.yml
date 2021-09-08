@@ -21,14 +21,27 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
+      # Logs in to Azure with a GitHub secret
       - name: Azure Login
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.Azure_Credentials }}
+      # Deploys the template with the ARM template action 
+      - name: Deploy Rescource Group from template
+        uses: Azure/arm-deploy@v1
+        with:
+          scope: subscription
+          subscriptionid: a8aae05d-4b5b-4dc0-b955-722323af69a5
+          region: West Europe
+          template: ./arm-templates/resourcegroup.json
+          deploymentName: DeployWithArmAction
 
-      - name: Azure CLI Action
-        uses: Azure/cli@1.0.4
-        with: 
-          inlinescript: |
-            az deployment sub create --location "West Europe" --template-file ./arm-templates/resourcegroup.json
+
+
+##        Deploying the template with az cli script!
+#    - name: Deploy Resource Group from template with AZ CLI
+#      uses: Azure/cli@1.0.4
+#      with: 
+#         inlinescript: |
+#           az deployment sub create --location "West Europe" --template-file ./arm-templates/resourcegroup.json
+#
