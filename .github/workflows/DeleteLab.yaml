@@ -16,4 +16,4 @@ jobs:
         uses: Azure/cli@1.0.4
         with:
           inlinescript: |
-            az group delete --resource-group AxelDevOpsTesting
+            az group delete --resource-group AxelDevOpsTesting --yes
