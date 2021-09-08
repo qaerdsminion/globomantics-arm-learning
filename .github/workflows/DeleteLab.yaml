@@ -1,0 +1,19 @@
+name: DeleteAzureLab
+
+on:
+  workflow_dispatch:
+    
+jobs:
+  LabDestroy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.Azure_Credentials }}
+
+      - name: Deleting the lab environment from Azure
+        uses: Azure/cli@1.0.4
+        with:
+          inlinescript: |
+            az group delete --resource-group AxelDevOpsTesting
