@@ -33,7 +33,7 @@ jobs:
           scope: subscription
           subscriptionid: a8aae05d-4b5b-4dc0-b955-722323af69a5
           region: West Europe
-          template: ./arm-templates/resourcegroup.json
+          template: ./arm-templates/RSG.json
           deploymentName: DeployWithArmAction
 
 
@@ -43,5 +43,5 @@ jobs:
 #      uses: Azure/cli@1.0.4
 #      with: 
 #         inlinescript: |
-#           az deployment sub create --location "West Europe" --template-file ./arm-templates/resourcegroup.json
+#           az deployment sub create --location "West Europe" --template-file ./arm-templates/RSG.json
 #
