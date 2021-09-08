@@ -36,6 +36,15 @@ jobs:
           template: ./arm-templates/RSG.json
           deploymentName: DeployWithArmAction
 
+      - name: Deploy Storage Account from template
+        uses: Azure/arm-deploy@v1
+        with:
+          scope: resourcegroup
+          resourcegroupname: AxelDevOpsTesting
+          subscriptionid: a8aae05d-4b5b-4dc0-b955-722323af69a5
+          template: ./arm-templates/SA.json
+          parameters: ./arm-templates/SA.parameters.json
+          deploymentname: incremental # The default mode; will not edit resources already in the RG.
 
 
 ##        Deploying the template with az cli script!
