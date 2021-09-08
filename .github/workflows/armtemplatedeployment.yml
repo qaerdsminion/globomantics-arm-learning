@@ -38,6 +38,7 @@ jobs:
 
       - name: Deploy Storage Account from template
         uses: Azure/arm-deploy@v1
+        id: storageAccountDeploy
         with:
           scope: resourcegroup
           resourcegroupname: AxelDevOpsTesting
@@ -48,6 +49,8 @@ jobs:
            StorageAccountName=axeldevopstestsa2
            location=northeurope
           deploymentname: incremental # The default mode; will not edit resources already in the RG.
+
+      - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
 
 
 ##        Deploying the template with az cli script!
