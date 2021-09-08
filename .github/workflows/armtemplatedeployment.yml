@@ -4,6 +4,9 @@ name: ArmTemplateDeployment
 
 # Controls when the workflow will run
 on:
+  push:
+    branches:
+      - main
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -23,3 +26,9 @@ jobs:
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.Azure_Credentials }}
+
+      - name: Azure CLI Action
+        uses: Azure/cli@1.0.4
+        with: 
+          inlinescript: |
+            az deployment sub create --location "Norway East" --template-file ./arm-templates/resourcegroup.json
