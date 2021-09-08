@@ -43,7 +43,10 @@ jobs:
           resourcegroupname: AxelDevOpsTesting
           subscriptionid: a8aae05d-4b5b-4dc0-b955-722323af69a5
           template: ./arm-templates/SA.json
-          parameters: ./arm-templates/SA.parameters.json
+          parameters: 
+           ./arm-templates/SA.parameters.json
+           storageAccountName=axeldevopstestsa2
+           location="East Europe"
           deploymentname: incremental # The default mode; will not edit resources already in the RG.
 
 
