@@ -49,7 +49,21 @@ jobs:
            location=northeurope
           deploymentname: incremental # The default mode; will not edit resources already in the RG.
 
-      - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
+
+      - name: Deploy VM from template
+        uses: Azure/arm-deploy@v1
+        with:
+          scope: resourcegroup
+          resourcegroupname: AxelDevOpsTesting
+          subscriptionid: ${{ secrets.Sub_ID }}
+          template: ./arm-templates/VM.json
+          parameters: 
+            adminPassword=${{ secrets.UBUNTU_ADMIN_PASSWORD }}
+          deploymentname: incremental 
+
+
+
+#      - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
 
 
 ##        Deploying the template with az cli script!
