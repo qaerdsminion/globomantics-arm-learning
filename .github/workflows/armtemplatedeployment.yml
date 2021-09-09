@@ -47,7 +47,7 @@ jobs:
            ./arm-templates/SA.parameters.json
            StorageAccountName=axeldevopstestsa2
            location=northeurope
-          deploymentname: incremental # The default mode; will not edit resources already in the RG.
+          deploymentMode: incremental # The default mode; will not edit resources already in the RG.
 
 
       - name: Deploy VM from template
@@ -59,7 +59,7 @@ jobs:
           template: ./arm-templates/VM.json
           parameters: 
             adminPassword=${{ secrets.UBUNTU_ADMIN_PASSWORD }}
-          deploymentname: incremental 
+          deploymentMode: incremental 
 
 
 
