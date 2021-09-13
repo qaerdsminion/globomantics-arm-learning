@@ -11,7 +11,7 @@ on:
 
 env:
   RG_Name: AxelDevOpsTesting
-  location: northeurope
+  location: westeurope
   SubID: ${{ secrets.Sub_ID }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
