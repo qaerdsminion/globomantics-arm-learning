@@ -12,7 +12,7 @@ on:
 # Repository wide secrets used up here; 
 # will be used if no enviroment is specified, or the secret name does not exist in the specified environment.
 env:
-  RG_Name: ${{ secrets.RG_Name }}
+#  RG_Name: ${{ secrets.RG_Name }}
   location: westeurope
   SubID: ${{ secrets.Sub_ID }}
 
@@ -50,7 +50,7 @@ jobs:
         id: storageAccountDeploy
         with:
           scope: resourcegroup
-          resourcegroupname: ${{ env.RG_Name }}
+          resourcegroupname: ${{ secrets.RG_Name }}
           subscriptionid: ${{ env.Sub_ID }}
           template: ./arm-templates/SA.json
           parameters: 
@@ -64,7 +64,7 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           scope: resourcegroup
-          resourcegroupname: ${{ env.RG_Name }}
+          resourcegroupname: ${{ secrets.RG_Name }}
           subscriptionid: ${{ env.Sub_ID }}
           template: ./arm-templates/VM.json
           parameters: 
@@ -106,7 +106,7 @@ jobs:
         id: storageAccountDeploy
         with:
           scope: resourcegroup
-          resourcegroupname: ${{ env.RG_Name }}
+          resourcegroupname: ${{ secrets.RG_Name }}
           subscriptionid: ${{ env.Sub_ID }}
           template: ./arm-templates/SA.json
           parameters: 
@@ -120,7 +120,7 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           scope: resourcegroup
-          resourcegroupname: ${{ env.RG_Name }}
+          resourcegroupname: ${{ secrets.RG_Name }}
           subscriptionid: ${{ env.Sub_ID }}
           template: ./arm-templates/VM.json
           parameters: 
