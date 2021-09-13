@@ -4,6 +4,12 @@
     "parameters": {
         "adminPassword": {
             "type": "securestring"
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Enter the loaction to deploy to"
+            }
         }
     },
     "functions": [],
@@ -13,7 +19,7 @@
             "name": "ubuntuVM1-VirtualNetwork",
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2019-11-01",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('location')]",
             "tags": {
                 "displayName": "ubuntuVM1-VirtualNetwork"
             },
@@ -37,7 +43,7 @@
             "name": "ubuntuVM1-NetworkInterface",
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2019-11-01",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks', 'ubuntuVM1-VirtualNetwork')]"
             ],
@@ -62,7 +68,7 @@
             "name": "ubuntuVM1",
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2019-07-01",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkInterfaces', 'ubuntuVM1-NetworkInterface')]"
             ],
