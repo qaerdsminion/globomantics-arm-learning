@@ -9,6 +9,8 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# Repository wide secrets used up here; 
+# will be used if no enviroment is specified, or the secret name does not exist in the specified environment.
 env:
   RG_Name: ${{ secrets.RG_Name }}
   location: westeurope
@@ -16,10 +18,13 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  armDeploy:
+  armDeployStaging:
+    name: Deploy to staging environment in Github
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    environment:
+      name: staging
+      # Environment specific secrets will be used for this job, pulling from the staging environment.
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -67,6 +72,61 @@ jobs:
             location=${{ env.location }}
           deploymentMode: incremental 
 
+  armDeployProduction:
+    name: Deploy to production environment in Github
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # environment:
+      # name: production
+      # Environment specific secrets will be used for this job, pulling from the staging environment.
+
+    needs: armDeployStaging  
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      # Logs in to Azure with a GitHub secret
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.Azure_Credentials }}
+      # Deploys the template with the ARM template action 
+      - name: Deploy Rescource Group from template
+        uses: Azure/arm-deploy@v1
+        with:
+          scope: subscription
+          subscriptionid: ${{ env.Sub_ID }}
+          region: ${{ env.location }}
+          template: ./arm-templates/RSG.json
+          deploymentName: DeployWithArmAction
+
+      - name: Deploy Storage Account from template
+        uses: Azure/arm-deploy@v1
+        id: storageAccountDeploy
+        with:
+          scope: resourcegroup
+          resourcegroupname: ${{ env.RG_Name }}
+          subscriptionid: ${{ env.Sub_ID }}
+          template: ./arm-templates/SA.json
+          parameters: 
+           ./arm-templates/SA.parameters.json
+           StorageAccountName=axeldevopstestsa2
+           location=${{ env.location }}
+          deploymentMode: incremental # The default mode; will not edit resources already in the RG.
+
+
+      - name: Deploy VM from template
+        uses: Azure/arm-deploy@v1
+        with:
+          scope: resourcegroup
+          resourcegroupname: ${{ env.RG_Name }}
+          subscriptionid: ${{ env.Sub_ID }}
+          template: ./arm-templates/VM.json
+          parameters: 
+            adminPassword=${{ secrets.UBUNTU_ADMIN_PASSWORD }}
+            location=${{ env.location }}
+          deploymentMode: incremental 
 
 
 #      - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
