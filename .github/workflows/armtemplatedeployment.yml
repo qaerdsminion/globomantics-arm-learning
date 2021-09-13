@@ -9,6 +9,11 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  RG_Name: AxelDevOpsTesting
+  location: northeurope
+  SubID: ${{ secrets.Sub_ID }}
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -30,8 +35,8 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           scope: subscription
-          subscriptionid: ${{ secrets.Sub_ID }}
-          region: West Europe
+          subscriptionid: ${{ env.Sub_ID }}
+          region: ${{ env.location }}
           template: ./arm-templates/RSG.json
           deploymentName: DeployWithArmAction
 
@@ -40,13 +45,13 @@ jobs:
         id: storageAccountDeploy
         with:
           scope: resourcegroup
-          resourcegroupname: AxelDevOpsTesting
-          subscriptionid: ${{ secrets.Sub_ID }}
+          resourcegroupname: ${{ env.RG_Name }}
+          subscriptionid: ${{ env.Sub_ID }}
           template: ./arm-templates/SA.json
           parameters: 
            ./arm-templates/SA.parameters.json
            StorageAccountName=axeldevopstestsa2
-           location=northeurope
+           location=${{ env.location }}
           deploymentMode: incremental # The default mode; will not edit resources already in the RG.
 
 
@@ -54,12 +59,12 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           scope: resourcegroup
-          resourcegroupname: AxelDevOpsTesting
-          subscriptionid: ${{ secrets.Sub_ID }}
+          resourcegroupname: ${{ env.RG_Name }}
+          subscriptionid: ${{ env.Sub_ID }}
           template: ./arm-templates/VM.json
           parameters: 
             adminPassword=${{ secrets.UBUNTU_ADMIN_PASSWORD }}
-            location=northeurope
+            location=${{ env.location }}
           deploymentMode: incremental 
 
 
