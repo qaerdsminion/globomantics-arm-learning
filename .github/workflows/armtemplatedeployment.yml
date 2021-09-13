@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  RG_Name: AxelDevOpsTesting
+  RG_Name: ${{ secrets.RG_Name }}
   location: westeurope
   SubID: ${{ secrets.Sub_ID }}
 
