@@ -4,9 +4,6 @@ name: "Bicep Deployment Workflow"
 on:
   workflow_dispatch:
 
-env:
-  subID: ${{ secrets.Sub_ID }}
-
 jobs:
   bicepAzCliDeploy:
     name: Bicep AZ CLI Deployment Job
@@ -67,7 +64,7 @@ jobs:
         with:
           scope: subscription
           region: ${{ env.location }}
-          subscriptionId: ${{ env.subID }}
+          subscriptionId: ${{ secrets.Sub_ID }}
           deploymentName: ${{ env.resourcegroupname }}
           template: ./bicep-templates/resourcegroup.bicep
           parameters:
@@ -79,7 +76,7 @@ jobs:
         with:
           scope: resourcegroup
           resourcegroupname: ${{ env.resourcegroupname }}
-          subscriptionID: ${{ env.subID }}
+          subscriptionID: ${{ secrets.Sub_ID }}
           deploymentName: ${{ env.resourcegroupname }}
           template: ./bicep-templates/virtualnetwork.bicep
           parameters:
