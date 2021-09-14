@@ -1,5 +1,5 @@
 # Name the Workflow
-name: ArmTemplateDeployment
+name: ARM Template Deployment Workflow
 
 # Controls when the workflow will run
 on:
