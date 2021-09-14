@@ -80,5 +80,5 @@ jobs:
           deploymentName: ${{ env.resourcegroupname }}
           template: ./bicep-templates/virtualnetwork.bicep
           parameters:
-            vNetPrefix=bicepazcli
+            vNetPrefix=biceparmdeploy
             location="${{ env.location }}"

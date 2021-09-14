@@ -1,9 +1,9 @@
 param resourceGroupName string
 param location string
 
-targetscope = 'subscription'
+targetScope = 'subscription'
 
-resource subscription 'microsoft.resources/subscription@2021-04-01' = {
+resource resourceGroup 'microsoft.resources/resourceGroups@2021-04-01' = {
   name: resourceGroupName
   location: location
 }
