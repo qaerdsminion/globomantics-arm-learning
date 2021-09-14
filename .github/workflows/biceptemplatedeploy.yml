@@ -39,7 +39,7 @@ jobs:
           inlinescript: |
             az deployment group create \
             --resource-group ${{ env.resourcegroupname }} \
-            --template-file ./bicep-templates/virtualnetwork.biep \
+            --template-file ./bicep-templates/virtualnetwork.bicep \
             --parameters \
             vNetPrefix=bicepazcli \
             location="${{ env.location }}"
