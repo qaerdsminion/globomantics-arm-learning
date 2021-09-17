@@ -86,8 +86,8 @@ jobs:
     name: Deploy to production environment in Github
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    # environment:
-      # name: production
+    environment:
+      name: Production
       # Environment specific secrets will be used for this job, pulling from the staging environment.
 
     needs: armDeployStaging  
