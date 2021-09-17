@@ -24,7 +24,9 @@ jobs:
           - ubuntu-latest
           - windows-latest
           - macos-latest
-      fail-fast: false
+      fail-fast: false # Makes it not fail all the jobs when one fails.
+                       # Two of these jobs will fail.
+                       # Because the deployment in Azure is active and cannot be used by multiple jobs.
 
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }} # tell the action to run on all of the options in the matrix
