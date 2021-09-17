@@ -24,6 +24,7 @@ jobs:
           - ubuntu-latest
           - windows-latest
           - macos-latest
+      fail-fast: false
 
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }} # tell the action to run on all of the options in the matrix
