@@ -22,8 +22,8 @@ jobs:
       matrix: # Create the matrix of options that can be used
         os:
           - ubuntu-latest
-          - windows-latest
-          - macos-latest
+          #- windows-latest
+          #- macos-latest
       fail-fast: false # Makes it not fail all the jobs when one fails.
                        # Two of these jobs will fail.
                        # Because the deployment in Azure is active and cannot be used by multiple jobs.
@@ -51,7 +51,7 @@ jobs:
           subscriptionid: ${{ secrets.Sub_ID }}
           region: ${{ env.location }}
           template: ./arm-templates/RSG.json
-          deploymentName: DeployWithArmAction
+          deploymentName: DeployWithArmActionStaging
           parameters:
             resourceGroupName=${{ secrets.RG_Name }}
 
@@ -109,7 +109,7 @@ jobs:
           subscriptionid: ${{ secrets.Sub_ID }}
           region: ${{ env.location }}
           template: ./arm-templates/RSG.json
-          deploymentName: DeployWithArmAction
+          deploymentName: DeployWithArmActionProd
           parameters:
             resourceGroupName=${{ secrets.RG_Name }}
 
